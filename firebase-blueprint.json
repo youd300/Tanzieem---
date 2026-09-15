@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with real gamification progression and stats",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 80 },
+        "email": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 60 },
+        "level": { "type": "number" },
+        "xp": { "type": "number" },
+        "coins": { "type": "number" },
+        "streak": { "type": "number" },
+        "bestStreak": { "type": "number" },
+        "focusMinutesTotal": { "type": "number" },
+        "completedTasksTotal": { "type": "number" },
+        "dailyTargetMinutes": { "type": "number" },
+        "preferredSessionMinutes": { "type": "number" },
+        "focusArea": { "type": "string", "maxLength": 30 },
+        "companionName": { "type": "string", "maxLength": 50 },
+        "companionVibe": { "type": "number" },
+        "avatarUrl": { "type": "string", "maxLength": 1024 },
+        "coverUrl": { "type": "string", "maxLength": 1024 },
+        "onboardingCompleted": { "type": "boolean" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "name", "level", "xp", "coins", "streak", "onboardingCompleted"]
+    },
+    "TaskQuest": {
+      "title": "TaskQuest",
+      "description": "Productivity task quest with sub-objectives and XP reward",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "category": { "type": "string", "maxLength": 40 },
+        "priority": { "type": "string", "maxLength": 20 },
+        "status": { "type": "string", "maxLength": 20 },
+        "estimatedMinutes": { "type": "number" },
+        "xpReward": { "type": "number" },
+        "deadline": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "userId", "title", "category", "priority", "status", "xpReward"]
+    },
+    "FocusSession": {
+      "title": "FocusSession",
+      "description": "Immutable record of a completed focus session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "taskId": { "type": "string", "maxLength": 128 },
+        "taskTitle": { "type": "string", "maxLength": 200 },
+        "plannedMinutes": { "type": "number" },
+        "actualMinutes": { "type": "number" },
+        "startTimestamp": { "type": "number" },
+        "expectedEndTimestamp": { "type": "number" },
+        "status": { "type": "string", "maxLength": 20 },
+        "xpEarned": { "type": "number" },
+        "coinsEarned": { "type": "number" },
+        "completedAt": { "type": "number" }
+      },
+      "required": ["id", "userId", "plannedMinutes", "actualMinutes", "status", "xpEarned", "coinsEarned"]
+    },
+    "DailyStat": {
+      "title": "DailyStat",
+      "description": "Aggregated productivity records per day",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "maxLength": 10 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "focusMinutes": { "type": "number" },
+        "completedTasks": { "type": "number" },
+        "sessions": { "type": "number" },
+        "xpEarned": { "type": "number" },
+        "coinsEarned": { "type": "number" },
+        "successfulDay": { "type": "boolean" },
+        "topCategory": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["date", "userId", "focusMinutes", "completedTasks", "sessions", "xpEarned"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Main user document"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "TaskQuest",
+      "description": "User task quests collection"
+    },
+    "/users/{userId}/focusSessions/{sessionId}": {
+      "schema": "FocusSession",
+      "description": "History of focus sessions"
+    },
+    "/users/{userId}/dailyStats/{date}": {
+      "schema": "DailyStat",
+      "description": "Daily aggregate productivity document"
+    }
+  }
+}

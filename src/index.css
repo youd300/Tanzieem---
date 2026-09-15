@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #070A13;
+    --bg-elevated: #0B1120;
+    --bg-surface: #0F172A;
+    --bg-glass: rgba(15, 23, 42, 0.72);
+    --bg-glass-hover: rgba(30, 41, 59, 0.85);
+    --border-subtle: rgba(56, 189, 248, 0.12);
+    --border-active: rgba(0, 229, 255, 0.4);
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --color-cyan: #00E5FF;
+    --color-blue: #38BDF8;
+    --color-electric: #3B82F6;
+    --color-violet: #A855F7;
+    --color-emerald: #10B981;
+    --color-xp: #00E5FF;
+    --color-coins: #FBBF24;
+    --color-streak: #FB923C;
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-arabic: 'Tajawal', system-ui, sans-serif;
+    --font-creator: 'Playfair Display', Georgia, serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  [dir="rtl"] body,
+  [dir="rtl"] * {
+    font-family: var(--font-arabic), var(--font-sans);
+  }
+
+  /* Tabular numbers for countdown and metrics */
+  .font-tabular {
+    font-variant-numeric: tabular-nums;
+    font-family: var(--font-display);
+  }
+}
+
+.creator-credit {
+  font-family: var(--font-creator);
+  font-style: italic;
+}
+
+/* Glassmorphic surface cards */
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-panel-glow {
+  background: var(--bg-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(0, 229, 255, 0.28);
+  box-shadow: 0 0 25px -5px rgba(0, 229, 255, 0.15);
+}
+
+/* Pulse and glow animations */
+@keyframes breathing-glow {
+  0%, 100% {
+    box-shadow: 0 0 25px 2px rgba(0, 229, 255, 0.2);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 45px 8px rgba(0, 229, 255, 0.4);
+    transform: scale(1.008);
+  }
+}
+
+.animate-breathe {
+  animation: breathing-glow 4s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #070A13;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}

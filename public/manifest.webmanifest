@@ -1,0 +1,43 @@
+{
+  "id": "/",
+  "name": "Tanzieem — Organize Your Time. Build Your Life.",
+  "short_name": "Tanzieem",
+  "description": "Production-grade PWA productivity system with deep flow focus timer, quest tasks, companion room, and AI time coach.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#070A13",
+  "theme_color": "#070A13",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "Start Focus",
+      "short_name": "Focus",
+      "description": "Start a 25m Pomodoro Flow session",
+      "url": "/?action=focus",
+      "icons": [{ "src": "/icon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Quests",
+      "short_name": "Tasks",
+      "description": "Open active quest task backlog",
+      "url": "/?action=tasks",
+      "icons": [{ "src": "/icon.svg", "sizes": "192x192" }]
+    }
+  ]
+}

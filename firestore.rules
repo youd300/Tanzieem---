@@ -1,0 +1,74 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // User profile rule
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false; // Blanket user listing forbidden
+      allow create: if isOwner(userId)
+        && request.resource.data.id == userId
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 80
+        && request.resource.data.level is number
+        && request.resource.data.xp is number
+        && request.resource.data.coins is number
+        && request.resource.data.streak is number;
+
+      allow update: if isOwner(userId)
+        && request.resource.data.id == userId
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 80;
+
+      allow delete: if false;
+
+      // Tasks Subcollection
+      match /tasks/{taskId} {
+        allow get, list: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && isValidId(taskId)
+          && request.resource.data.title is string
+          && request.resource.data.title.size() <= 200
+          && request.resource.data.xpReward is number;
+        allow delete: if isOwner(userId);
+      }
+
+      // Focus Sessions Subcollection
+      match /focusSessions/{sessionId} {
+        allow get, list: if isOwner(userId);
+        allow create: if isOwner(userId)
+          && isValidId(sessionId)
+          && request.resource.data.plannedMinutes is number
+          && request.resource.data.actualMinutes is number
+          && request.resource.data.xpEarned is number
+          && request.resource.data.coinsEarned is number;
+        allow update, delete: if false; // Immutable session history
+      }
+
+      // Daily Stats Subcollection
+      match /dailyStats/{date} {
+        allow get, list: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && request.resource.data.focusMinutes is number
+          && request.resource.data.completedTasks is number;
+        allow delete: if false;
+      }
+    }
+  }
+}

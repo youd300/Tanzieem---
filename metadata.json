@@ -1,0 +1,6 @@
+{
+  "name": "Tanzieem",
+  "description": "Organize Your Time. Build Your Life. Production-grade PWA productivity system with deep flow focus timer, quests, cozy companion room, gamification, and AI time coach.",
+  "requestFramePermissions": ["notifications"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
